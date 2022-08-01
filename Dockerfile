@@ -1,14 +1,9 @@
 FROM joinmarket-base
 
-RUN mkdir /conf /data
+RUN mkdir /data
 
-COPY ./presetBitcoinConfigs/ /conf/
+COPY ./joinmarket.cfg /data
 
-ADD "https://bitcoincore.org/bin/bitcoin-core-23.0/bitcoin-23.0-x86_64-linux-gnu.tar.gz" /tmp/bitcoincore.tar.gz
+CMD sleep 1m && python3 /jm/clientserver/scripts/wallet-tool.py --datadir=/data generate
 
-WORKDIR /tmp
-
-RUN tar -xvzf /tmp/bitcoincore.tar.gz \
-    && mv bitcoin-23.0/bin/* /bin/
-
-CMD bitcoind -conf=/conf/pruned-bitcoin.conf
+#CMD python3 /jm/clientserver/scripts/wallet-tool.py --datadir=/data
