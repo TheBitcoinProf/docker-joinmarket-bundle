@@ -1,11 +1,20 @@
 version: "3.9"
+
+volumes:
+  authDir:
+
 services:
   joinmarket:
-    build: .
+    image: "jm"
+    volumes:
+      - "authDir:/auth"
+ #   command:
+  #    - sh -c "sleep 5m && python3 /jm/clientserver/scripts/wallet-tool.py --datadir=/data generate"
   bitcoin-node:
     container_name: "bitcoin-node"
-    image: "lightweight-btc"
+    image: "btc-node"
     ports:
       - "8332:8332"
     volumes:
       - "/home/domowy/Downloads/blockchain:/data"
+      - "authDir:/auth"
