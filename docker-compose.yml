@@ -5,14 +5,18 @@ volumes:
 
 services:
   joinmarket:
-    image: "jm"
+    container_name: "joinmarket"
+    build:
+      context: "./"
+      args:
+        bitcoinCoreVersion: 23.0
     volumes:
       - "authDir:/auth"
- #   command:
-  #    - sh -c "sleep 5m && python3 /jm/clientserver/scripts/wallet-tool.py --datadir=/data generate"
+    depends_on:
+      - bitcoin-node
   bitcoin-node:
     container_name: "bitcoin-node"
-    image: "btc-node"
+    image: "thebitcoinprof/lightweight-bitcoin-node"
     ports:
       - "8332:8332"
     volumes:
